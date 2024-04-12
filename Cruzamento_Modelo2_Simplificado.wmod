@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<Module xmlns="http://waters.sourceforge.net/xsd/module" xmlns:B="http://waters.sourceforge.net/xsd/base" Name="Cruzamento_Simplificadasso_3">
+<EventDeclList>
+<EventDecl Kind="CONTROLLABLE" Name="Abrir_AC"/>
+<EventDecl Kind="CONTROLLABLE" Name="Abrir_BD"/>
+<EventDecl Kind="CONTROLLABLE" Name="Fechar_AC"/>
+<EventDecl Kind="CONTROLLABLE" Name="Fechar_BD"/>
+<EventDecl Kind="CONTROLLABLE" Name="Amarelar_AC"/>
+<EventDecl Kind="CONTROLLABLE" Name="Amarelar_BD"/>
+<EventDecl Kind="CONTROLLABLE" Name="Requisitar_AC_FP"/>
+<EventDecl Kind="CONTROLLABLE" Name="Requisitar_BD_FP"/>
+<EventDecl Kind="CONTROLLABLE" Name="Abrir_AC_FP"/>
+<EventDecl Kind="CONTROLLABLE" Name="Abrir_BD_FP"/>
+<EventDecl Kind="CONTROLLABLE" Name="Fechar_AC_FP"/>
+<EventDecl Kind="CONTROLLABLE" Name="Fechar_BD_FP"/>
+</EventDeclList>
+<ComponentList>
+<VariableComponent Name="Troca_Sinal">
+<VariableRange><BinaryExpression Operator="..">
+<IntConstant Value="0"/>
+<IntConstant Value="1"/>
+</BinaryExpression>
+</VariableRange>
+<VariableInitial><IntConstant Value="1"/>
+</VariableInitial>
+</VariableComponent>
+<SimpleComponent Kind="PLANT" Name="Sem_AC">
+<Graph>
+<NodeList>
+<SimpleNode Initial="true" Name="AC_VERMELHO">
+<PointGeometry>
+<Point X="192" Y="128"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="AC_AMARELO">
+<PointGeometry>
+<Point X="192" Y="256"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="AC_VERDE">
+<PointGeometry>
+<Point X="192" Y="400"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+</NodeList>
+<EdgeList>
+<Edge Source="AC_VERMELHO" Target="AC_VERDE">
+<LabelBlock>
+<SimpleIdentifier Name="Abrir_AC"/>
+<LabelGeometry Anchor="NW">
+<Point X="-58" Y="-27"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="96" Y="268"/>
+</SplineGeometry>
+<GuardActionBlock>
+<Guards>
+<BinaryExpression Operator="&amp;" Text="Estado_BD == 0 &amp; Troca_Sinal == 0 &amp; Estado_AC_FP == 0">
+<BinaryExpression Operator="&amp;">
+<BinaryExpression Operator="==">
+<SimpleIdentifier Name="Estado_BD"/>
+<IntConstant Value="0"/>
+</BinaryExpression>
+<BinaryExpression Operator="==">
+<SimpleIdentifier Name="Troca_Sinal"/>
+<IntConstant Value="0"/>
+</BinaryExpression>
+</BinaryExpression>
+<BinaryExpression Operator="==">
+<SimpleIdentifier Name="Estado_AC_FP"/>
+<IntConstant Value="0"/>
+</BinaryExpression>
+</BinaryExpression>
+</Guards>
+<Actions>
+<BinaryExpression Operator="=" Text="Estado_AC = 1">
+<SimpleIdentifier Name="Estado_AC"/>
+<IntConstant Value="1"/>
+</BinaryExpression>
+<BinaryExpression Operator="=" Text="Troca_Sinal = 1">
+<SimpleIdentifier Name="Troca_Sinal"/>
+<IntConstant Value="1"/>
+</BinaryExpression>
+</Actions>
+<LabelGeometry Anchor="NW">
+<Point X="-291" Y="3"/>
+</LabelGeometry>
+</GuardActionBlock>
+</Edge>
+<Edge Source="AC_VERDE" Target="AC_AMARELO">
+<LabelBlock>
+<SimpleIdentifier Name="Amarelar_AC"/>
+<SimpleIdentifier Name="Requisitar_AC_FP"/>
+<LabelGeometry Anchor="NW">
+<Point X="9" Y="-13"/>
+</LabelGeometry>
+</LabelBlock>
+</Edge>
+<Edge Source="AC_AMARELO" Target="AC_VERMELHO">
+<LabelBlock>
+<SimpleIdentifier Name="Fechar_AC"/>
+<LabelGeometry Anchor="NW">
+<Point X="13" Y="-13"/>
+</LabelGeometry>
+</LabelBlock>
+<GuardActionBlock>
+<Actions>
+<BinaryExpression Operator="=">
+<SimpleIdentifier Name="Estado_AC"/>
+<IntConstant Value="0"/>
+</BinaryExpression>
+</Actions>
+<LabelGeometry Anchor="NW">
+<Point X="15" Y="3"/>
+</LabelGeometry>
+</GuardActionBlock>
+</Edge>
+<Edge Source="AC_AMARELO" Target="AC_AMARELO">
+<LabelBlock>
+<SimpleIdentifier Name="Requisitar_AC_FP"/>
+<LabelGeometry Anchor="NW">
+<Point X="6" Y="-6"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="256" Y="244"/>
+</SplineGeometry>
+</Edge>
+<Edge Source="AC_VERMELHO" Target="AC_VERMELHO">
+<LabelBlock>
+<SimpleIdentifier Name="Requisitar_AC_FP"/>
+<LabelGeometry Anchor="NW">
+<Point X="16" Y="11"/>
+</LabelGeometry>
+</LabelBlock>
+</Edge>
+</EdgeList>
+</Graph>
+</SimpleComponent>
+<SimpleComponent Kind="PLANT" Name="Sem_FP_AC">
+<Graph>
+<NodeList>
+<SimpleNode Initial="true" Name="FP_AC_VERMELHO">
+<PointGeometry>
+<Point X="208" Y="112"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="FP_AC_REQUISITADO">
+<PointGeometry>
+<Point X="208" Y="256"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="FP_AC_VERDE">
+<PointGeometry>
+<Point X="208" Y="368"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+</NodeList>
+<EdgeList>
+<Edge Source="FP_AC_VERMELHO" Target="FP_AC_REQUISITADO">
+<LabelBlock>
+<SimpleIdentifier Name="Requisitar_AC_FP"/>
+<LabelGeometry Anchor="NW">
+<Point X="10" Y="-9"/>
+</LabelGeometry>
+</LabelBlock>
+</Edge>
+<Edge Source="FP_AC_REQUISITADO" Target="FP_AC_VERDE">
+<LabelBlock>
+<SimpleIdentifier Name="Abrir_AC_FP"/>
+<LabelGeometry Anchor="NW">
+<Point X="16" Y="-26"/>
+</LabelGeometry>
+</LabelBlock>
+<GuardActionBlock>
+<Guards>
+<BinaryExpression Operator="==" Text="Estado_AC == 0">
+<SimpleIdentifier Name="Estado_AC"/>
+<IntConstant Value="0"/>
+</BinaryExpression>
+</Guards>
+<Actions>
+<BinaryExpression Operator="=" Text="Estado_AC_FP = 1">
+<SimpleIdentifier Name="Estado_AC_FP"/>
+<IntConstant Value="1"/>
+</BinaryExpression>
+</Actions>
+<LabelGeometry Anchor="NW">
+<Point X="15" Y="-6"/>
+</LabelGeometry>
+</GuardActionBlock>
+</Edge>
+<Edge Source="FP_AC_VERDE" Target="FP_AC_VERMELHO">
+<LabelBlock>
+<SimpleIdentifier Name="Fechar_AC_FP"/>
+<LabelGeometry Anchor="NW">
+<Point X="-93" Y="-37"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="105" Y="243"/>
+</SplineGeometry>
+<GuardActionBlock>
+<Actions>
+<BinaryExpression Operator="=" Text="Estado_AC_FP = 0">
+<SimpleIdentifier Name="Estado_AC_FP"/>
+<IntConstant Value="0"/>
+</BinaryExpression>
+</Actions>
+<LabelGeometry Anchor="NW">
+<Point X="-111" Y="-15"/>
+</LabelGeometry>
+</GuardActionBlock>
+</Edge>
+</EdgeList>
+</Graph>
+</SimpleComponent>
+<VariableComponent Name="Estado_AC">
+<VariableRange><BinaryExpression Operator="..">
+<IntConstant Value="0"/>
+<IntConstant Value="1"/>
+</BinaryExpression>
+</VariableRange>
+<VariableInitial><IntConstant Value="1"/>
+</VariableInitial>
+</VariableComponent>
+<VariableComponent Name="Estado_AC_FP">
+<VariableRange><BinaryExpression Operator="..">
+<IntConstant Value="0"/>
+<IntConstant Value="1"/>
+</BinaryExpression>
+</VariableRange>
+<VariableInitial><IntConstant Value="1"/>
+</VariableInitial>
+</VariableComponent>
+<VariableComponent Name="___________________">
+<VariableRange><BinaryExpression Operator="..">
+<IntConstant Value="0"/>
+<IntConstant Value="1"/>
+</BinaryExpression>
+</VariableRange>
+<VariableInitial><IntConstant Value="1"/>
+</VariableInitial>
+</VariableComponent>
+<SimpleComponent Kind="PLANT" Name="Sem_BD">
+<Graph>
+<NodeList>
+<SimpleNode Initial="true" Name="BD_VERMELHO">
+<PointGeometry>
+<Point X="256" Y="128"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="BD_AMARELO">
+<PointGeometry>
+<Point X="256" Y="256"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="BD_VERDE">
+<PointGeometry>
+<Point X="256" Y="384"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+</NodeList>
+<EdgeList>
+<Edge Source="BD_VERMELHO" Target="BD_VERDE">
+<LabelBlock>
+<SimpleIdentifier Name="Abrir_BD"/>
+<LabelGeometry Anchor="NW">
+<Point X="-63" Y="-34"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="164" Y="263"/>
+</SplineGeometry>
+<GuardActionBlock>
+<Guards>
+<BinaryExpression Operator="&amp;" Text="Estado_AC == 0 &amp; Troca_Sinal == 1 &amp; Estado_BD_FP == 0">
+<BinaryExpression Operator="&amp;">
+<BinaryExpression Operator="==">
+<SimpleIdentifier Name="Estado_AC"/>
+<IntConstant Value="0"/>
+</BinaryExpression>
+<BinaryExpression Operator="==">
+<SimpleIdentifier Name="Troca_Sinal"/>
+<IntConstant Value="1"/>
+</BinaryExpression>
+</BinaryExpression>
+<BinaryExpression Operator="==">
+<SimpleIdentifier Name="Estado_BD_FP"/>
+<IntConstant Value="0"/>
+</BinaryExpression>
+</BinaryExpression>
+</Guards>
+<Actions>
+<BinaryExpression Operator="=" Text="Estado_BD = 1">
+<SimpleIdentifier Name="Estado_BD"/>
+<IntConstant Value="1"/>
+</BinaryExpression>
+<BinaryExpression Operator="=" Text="Troca_Sinal = 0">
+<SimpleIdentifier Name="Troca_Sinal"/>
+<IntConstant Value="0"/>
+</BinaryExpression>
+</Actions>
+<LabelGeometry Anchor="NW">
+<Point X="-231" Y="-1"/>
+</LabelGeometry>
+</GuardActionBlock>
+</Edge>
+<Edge Source="BD_VERDE" Target="BD_AMARELO">
+<LabelBlock>
+<SimpleIdentifier Name="Amarelar_BD"/>
+<SimpleIdentifier Name="Requisitar_BD_FP"/>
+<LabelGeometry Anchor="NW">
+<Point X="8" Y="-11"/>
+</LabelGeometry>
+</LabelBlock>
+</Edge>
+<Edge Source="BD_AMARELO" Target="BD_VERMELHO">
+<LabelBlock>
+<SimpleIdentifier Name="Fechar_BD"/>
+<LabelGeometry Anchor="NW">
+<Point X="8" Y="-13"/>
+</LabelGeometry>
+</LabelBlock>
+<GuardActionBlock>
+<Actions>
+<BinaryExpression Operator="=" Text="Estado_BD = 0">
+<SimpleIdentifier Name="Estado_BD"/>
+<IntConstant Value="0"/>
+</BinaryExpression>
+</Actions>
+<LabelGeometry Anchor="NW">
+<Point X="9" Y="10"/>
+</LabelGeometry>
+</GuardActionBlock>
+</Edge>
+<Edge Source="BD_AMARELO" Target="BD_AMARELO">
+<LabelBlock>
+<SimpleIdentifier Name="Requisitar_BD_FP"/>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="-8"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="323" Y="242"/>
+</SplineGeometry>
+</Edge>
+<Edge Source="BD_VERMELHO" Target="BD_VERMELHO">
+<LabelBlock>
+<SimpleIdentifier Name="Requisitar_BD_FP"/>
+<LabelGeometry Anchor="NW">
+<Point X="23" Y="-11"/>
+</LabelGeometry>
+</LabelBlock>
+</Edge>
+</EdgeList>
+</Graph>
+</SimpleComponent>
+<SimpleComponent Kind="PLANT" Name="Sem_FP_BD">
+<Graph>
+<NodeList>
+<SimpleNode Initial="true" Name="FP_BD_VERMELHO">
+<PointGeometry>
+<Point X="240" Y="144"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="FP_BD_REQUISITADO">
+<PointGeometry>
+<Point X="240" Y="288"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="FP_BD_VERDE">
+<PointGeometry>
+<Point X="240" Y="448"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+</NodeList>
+<EdgeList>
+<Edge Source="FP_BD_VERMELHO" Target="FP_BD_REQUISITADO">
+<LabelBlock>
+<SimpleIdentifier Name="Requisitar_BD_FP"/>
+<LabelGeometry Anchor="NW">
+<Point X="11" Y="-10"/>
+</LabelGeometry>
+</LabelBlock>
+</Edge>
+<Edge Source="FP_BD_REQUISITADO" Target="FP_BD_VERDE">
+<LabelBlock>
+<SimpleIdentifier Name="Abrir_BD_FP"/>
+<LabelGeometry Anchor="NW">
+<Point X="9" Y="-17"/>
+</LabelGeometry>
+</LabelBlock>
+<GuardActionBlock>
+<Guards>
+<BinaryExpression Operator="==" Text="Estado_BD == 0">
+<SimpleIdentifier Name="Estado_BD"/>
+<IntConstant Value="0"/>
+</BinaryExpression>
+</Guards>
+<Actions>
+<BinaryExpression Operator="=" Text="Estado_BD_FP = 1">
+<SimpleIdentifier Name="Estado_BD_FP"/>
+<IntConstant Value="1"/>
+</BinaryExpression>
+</Actions>
+<LabelGeometry Anchor="NW">
+<Point X="10" Y="3"/>
+</LabelGeometry>
+</GuardActionBlock>
+</Edge>
+<Edge Source="FP_BD_VERDE" Target="FP_BD_VERMELHO">
+<LabelBlock>
+<SimpleIdentifier Name="Fechar_BD_FP"/>
+<LabelGeometry Anchor="NW">
+<Point X="-88" Y="-26"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="88" Y="288"/>
+</SplineGeometry>
+<GuardActionBlock>
+<Actions>
+<BinaryExpression Operator="=" Text="Estado_BD_FP = 0">
+<SimpleIdentifier Name="Estado_BD_FP"/>
+<IntConstant Value="0"/>
+</BinaryExpression>
+</Actions>
+<LabelGeometry Anchor="NW">
+<Point X="-103" Y="2"/>
+</LabelGeometry>
+</GuardActionBlock>
+</Edge>
+</EdgeList>
+</Graph>
+</SimpleComponent>
+<VariableComponent Name="Estado_BD">
+<VariableRange><BinaryExpression Operator="..">
+<IntConstant Value="0"/>
+<IntConstant Value="1"/>
+</BinaryExpression>
+</VariableRange>
+<VariableInitial><IntConstant Value="1"/>
+</VariableInitial>
+</VariableComponent>
+<VariableComponent Name="Estado_BD_FP">
+<VariableRange><BinaryExpression Operator="..">
+<IntConstant Value="0"/>
+<IntConstant Value="1"/>
+</BinaryExpression>
+</VariableRange>
+<VariableInitial><IntConstant Value="1"/>
+</VariableInitial>
+</VariableComponent>
+</ComponentList>
+</Module>
